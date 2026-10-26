@@ -1,12 +1,17 @@
--- Reset and create the self-contained exercise database.
-DROP DATABASE IF EXISTS hr_assignment5;
-CREATE DATABASE hr_assignment5 CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+-- Create the exercise database if absent; this script does not drop databases or tables.
+CREATE DATABASE IF NOT EXISTS hr_assignment5 CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE hr_assignment5;
+
+CREATE TABLE countries (
+    country_id CHAR(2) PRIMARY KEY,
+    country_name VARCHAR(40) NOT NULL UNIQUE
+);
 
 CREATE TABLE locations (
     location_id INT PRIMARY KEY,
     city VARCHAR(30) NOT NULL,
-    country_id CHAR(2) NOT NULL
+    country_id CHAR(2) NOT NULL,
+    CONSTRAINT fk_locations_country FOREIGN KEY (country_id) REFERENCES countries(country_id)
 );
 
 CREATE TABLE departments (

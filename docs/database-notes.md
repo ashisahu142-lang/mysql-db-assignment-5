@@ -4,13 +4,13 @@
 
 The preserved assignment document is the source of truth. It is titled “MySQL Subquery [22 exercises]” and contains 22 numbered prompts, followed by “More to Come!” and an HR database diagram. Every `sql/NN.sql` file reproduces its corresponding prompt in a comment. The source's stray replacement glyph between each number and “Write” is a Word formatting artifact; the question wording itself is preserved.
 
-The diagram lists the familiar HR tables: `regions`, `countries`, `locations`, `departments`, `employees`, `jobs`, `job_history`, and `job_grades`. The exercises only require employee, department, job, and grade data. `00_schema.sql` creates these four core tables and their relevant foreign keys, with MySQL types. `00_sample_data.sql` loads a deterministic synthetic dataset including `Bull`, `Bell`, IT departments, US locations, supervisors, departments without employees, and salary ties. It is intentionally smaller than Oracle's full HR sample data.
+The diagram lists the familiar HR tables: `regions`, `countries`, `locations`, `departments`, `employees`, `jobs`, `job_history`, and `job_grades`. The exercises require country, location, department, employee, job, and salary-grade data. `00_schema.sql` creates these tables and their relevant foreign keys with MySQL types. `00_sample_data.sql` loads a deterministic synthetic dataset including `Bull`, `Bell`, IT departments, US locations, supervisors, departments without employees, and salary ties. It is intentionally smaller than Oracle's full HR sample data.
 
 ## Query interpretations
 
-- Q3 asks for employees with a manager in a USA-based department and explicitly hints at single-row and multiple-row subqueries. The answer demonstrates both: an `=` scalar country lookup and an `IN` subquery for departments in US locations.
+- Q3 asks for employees with a manager in a USA-based department and explicitly hints at single-row and multiple-row subqueries. The answer uses a scalar lookup of the US country key by its unique name plus `IN` subqueries for matching US locations and departments.
 - Q4 identifies managers as employees referenced by another employee's `manager_id`.
-- Q6 maps “job grade” to `job_grades`, using the employee salary within the grade's inclusive low/high range. Since the original schema diagram omits a grade key on `employees`, the correlated query chooses the minimum salary among employees in the same grade band.
+- Q6 maps “job grade” to `job_grades`: salary locates the employee in the inclusive grade range, and the answer returns employees whose salary equals that grade row’s `lowest_sal` threshold. The diagram does not store a separate grade key on `employees`.
 - Q8 selects employees whose salary exceeds the salary of the employee whose last name is `Bell`; if there are multiple Bells, the query uses `MAX` to avoid a scalar-subquery error.
 - Q9 means employees paid the minimum salary value appearing in every department's employee group; the query compares the employee salary with the minimum department-level minimum. It does not require the employee to belong to every department.
 - Q10 compares each salary to the average of all departmental average salaries (each department has equal weight). This makes “average salary of all departments” explicit.

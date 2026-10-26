@@ -1,5 +1,8 @@
 USE hr_assignment5;
 
+INSERT INTO countries (country_id, country_name) VALUES
+('US', 'United States'), ('CA', 'Canada'), ('UK', 'United Kingdom');
+
 INSERT INTO locations (location_id, city, country_id) VALUES
 (1000, 'Seattle', 'US'), (1100, 'Toronto', 'CA'), (1200, 'London', 'UK');
 
@@ -50,4 +53,5 @@ INSERT INTO employees (employee_id, first_name, last_name, email, hire_date, job
 UPDATE departments SET manager_id = CASE department_id
     WHEN 10 THEN 100 WHEN 20 THEN 103 WHEN 50 THEN 107 WHEN 60 THEN 101
     WHEN 80 THEN 108 WHEN 90 THEN 100 WHEN 110 THEN 104 ELSE NULL
-END;
+END
+WHERE department_id IN (10, 20, 50, 60, 80, 90, 110);
