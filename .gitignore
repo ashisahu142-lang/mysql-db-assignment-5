@@ -1,0 +1,16 @@
+# Local database dumps and credentials
+*.sql.gz
+.env
+.env.*
+!.env.example
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Temporary output
+work/
+*.log
